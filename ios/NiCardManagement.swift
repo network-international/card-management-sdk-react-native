@@ -3,6 +3,21 @@ import NICardManagementSDK
 import React
 
 func createNICardManagementAPIInstance(from input: NSDictionary) -> NICardManagementAPI {
+  final class AdditionalHeadersProvider: NICardManagementExtraHeaders {
+    let extraHeaders: NSDictionary?
+    init(extraHeaders: NSDictionary?) {
+      self.extraHeaders = extraHeaders
+    }
+    func additionalNetworkHeaders() -> [String: String] {
+        guard let extraHeaders = extraHeaders else { return [:] }
+        var result = [String: String]()
+        for item in extraHeaders {
+            guard let key = item.key as? String, let val = item.value as? String else { continue }
+            result[key] = val
+        }
+        return result
+    }
+  }
   let bankCode = input["bankCode"] as? String ?? ""
   let cardIdentifierId = input["cardIdentifierId"] as? String ?? ""
   let cardIdentifierType = input["cardIdentifierType"] as? String ?? ""
@@ -10,6 +25,7 @@ func createNICardManagementAPIInstance(from input: NSDictionary) -> NICardManage
 
   let rootUrl = connectionProperties?["rootUrl"] as? String ?? ""
   let token = connectionProperties?["token"] as? String ?? ""
+  let extraHeaders = connectionProperties?["extraNetworkHeaders"] as? NSDictionary
 
   let tokenFetchable = TokenFetcherFactory.makeSimpleWrapper(tokenValue: token)
     
@@ -18,7 +34,8 @@ func createNICardManagementAPIInstance(from input: NSDictionary) -> NICardManage
       cardIdentifierId: cardIdentifierId,
       cardIdentifierType: cardIdentifierType,
       bankCode: bankCode,
-      tokenFetchable: tokenFetchable 
+      tokenFetchable: tokenFetchable,
+      extraHeadersProvider: AdditionalHeadersProvider(extraHeaders: extraHeaders)
   )
   return sdk
 }
