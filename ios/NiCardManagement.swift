@@ -11,6 +11,16 @@ func createNICardManagementAPIInstance(from input: NSDictionary) -> NICardManage
   let rootUrl = connectionProperties?["rootUrl"] as? String ?? ""
   let token = connectionProperties?["token"] as? String ?? ""
 
+  let extraHeadersDict = connectionProperties?["extraNetworkHeaders"] as? NSDictionary
+  var extraHeaders = [String: String]()
+  if let extraHeadersDict = extraHeadersDict {
+        for item in extraHeadersDict {
+            guard let key = item.key as? String, let val = item.value as? String else { continue }
+            extraHeaders[key] = val
+        }
+  }
+        
+
   let tokenFetchable = TokenFetcherFactory.makeSimpleWrapper(tokenValue: token)
     
   let sdk = NICardManagementAPI(
@@ -18,7 +28,8 @@ func createNICardManagementAPIInstance(from input: NSDictionary) -> NICardManage
       cardIdentifierId: cardIdentifierId,
       cardIdentifierType: cardIdentifierType,
       bankCode: bankCode,
-      tokenFetchable: tokenFetchable 
+      tokenFetchable: tokenFetchable,
+      extraHeaders: extraHeaders
   )
   return sdk
 }

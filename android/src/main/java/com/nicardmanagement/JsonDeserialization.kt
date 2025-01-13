@@ -12,9 +12,20 @@ fun deserializePerson(jsonString: String): NIInput? {
         val cardIdentifierType = jsonObject.getString("cardIdentifierType")
         val connectionPropertiesJsonObject = jsonObject.getJSONObject("connectionProperties")
 
+        val rootUrl = connectionPropertiesJsonObject.getString("rootUrl")
+        val token = connectionPropertiesJsonObject.getString("token")
+        val extraNetworkHeadersString = connectionPropertiesJsonObject.getString("extraHeaders")
+        val headersJsonObject = JSONObject(extraNetworkHeadersString)
+        val extraNetworkHeaders = mutableMapOf<String, String>()
+
+        //extraNetworkHeaders["apiuat_za_network_global"] = "qWyQt3D44Upner1T"
+        headersJsonObject.keys().forEach {
+          extraNetworkHeaders[it] = headersJsonObject.getString(it)
+        }
         val connectionProperties = NIConnectionProperties(
-            connectionPropertiesJsonObject.getString("rootUrl"),
-            connectionPropertiesJsonObject.getString("token")
+            rootUrl,
+            token,
+            extraNetworkHeaders
         )
         return NIInput(bankCode, cardIdentifierId, cardIdentifierType, connectionProperties)
     } catch (e: Exception) {
