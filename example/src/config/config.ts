@@ -82,50 +82,49 @@ const displayAttributes: NIDisplayAttributes = {
   cardAttributes: cardAttributes,
 };
 
-const ROOT_URL = 'https://apitest.network.ae';
-const TEST_TOKEN = 'bmda6azqssd2r53645gbwrk6';
+const ROOT_URL = 'https://apiuat.za.network.global/sdk/v2';
+const TEST_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhVS1uNnVldXVNNWpfSU5XU1htcVc0NVBLY1psaDE3d2Q0WDRuRVFNVktFIn0.eyJleHAiOjE3MzY3MTUyMDYsImlhdCI6MTczNjcxMzQwNiwianRpIjoiODg3NTkyNDQtNzk5Yy00NzFmLWIzMWItYjU5MDhmMTZkZjczIiwiaXNzIjoiaHR0cHM6Ly8xMC4yMTMuMzUuNzQvYXV0aC9yZWFsbXMvTkktTm9uUHJvZCIsInN1YiI6ImNiYmNiZmQ2LTVhZTgtNDRmMS04NzFhLWJiZThjNzczYTBlZCIsInR5cCI6IkJlYXJlciIsImF6cCI6IjJlYjA2NTIxLTE1MmEtNDUxNi1iODJkLTgyMWFmNjEzYjQ4MzgiLCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudElkIjoiMmViMDY1MjEtMTUyYS00NTE2LWI4MmQtODIxYWY2MTNiNDgzOCIsIm9yZ19pZCI6Ik1UTkciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtMmViMDY1MjEtMTUyYS00NTE2LWI4MmQtODIxYWY2MTNiNDgzOCJ9.Io58Rzso2cgqtYNMvk5YGYYi6F8rA-pnpoyjLr3nzAfeKXBueKBi_Yiye0NTth8kPOtss7M0oO10zzuVmDNXIOgZEFgHijL9xHV1YI7S7n8mE41LGRXbzXBASB8enQUwQ5OMpNI24KUtpdvXNs0I4iNsZ7Ay92o-wDv-oek_D7UG4RjA4SrwywUgBOHwADXYuNik0cbISbvs3XDr-rFDdpll8p4X84nE6X4qBjNe_fksLm62ohBG4On6xfGVcW6eiyPILyCr3VtntFxE0UBzjTGPvZZggoo5rDwH8NbHB0QLjDfLHFCDRJ0u-JzcZqTNLQhHuAS00l_bUenVv2vIHA';
+const BANK_CODE = 'MTNG';
+const CARD_ID = '54493796178884908975';
+const CARD_TYPE = 'EXID';
+
 
 const connectionProperties: NIConnectionProperties = {
   rootUrl: ROOT_URL,
   token: TEST_TOKEN,
+  extraHeaders: "{ \"apiuat_za_network_global\": \"qWyQt3D44Upner1T\" }"
 };
 
 export const TEST_INPUT: NiInputInterface = {
-  bankCode: 'EAND',
-  cardIdentifierId: '52913582188097343008',
-  cardIdentifierType: 'EXID',
+  bankCode: BANK_CODE,
+  cardIdentifierId: CARD_ID,
+  cardIdentifierType: CARD_TYPE,
   connectionProperties: connectionProperties,
+  // optional
   displayAttributes: displayAttributes,
+  // optional
   timer: 5,
 };
 
 export const cardInput: NIInputInterface = {
-  bankCode: 'EAND',
-  cardIdentifierId: '52913582188097343008',
-  cardIdentifierType: 'EXID',
+  bankCode: BANK_CODE,
+  cardIdentifierId: CARD_ID,
+  cardIdentifierType: CARD_TYPE,
   connectionProperties: connectionProperties,
 };
 
-const ROOT_URL_VIEW_PIN = 'https://api-uat.ksa.network.global/sdk/v2';
-const TEST_TOKEN_VIEW_PIN =
-  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJrUV9BVG96UWc5cjRvOWw3QzJKVFRKU0FOUlV2U2JiTDNUcTRTeUh6T29RIn0.eyJleHAiOjE3MDUzOTUyNjYsImlhdCI6MTcwNTM5MzQ2NiwianRpIjoiZWRhYTA0MzMtNDY2MS00ZTg0LWExZjktY2QxMjZkNmU0ZWI3IiwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS1ub25wcm9kLm5ldHdvcmsuc2EvYXV0aC9yZWFsbXMvTkktTm9uUHJvZCIsInN1YiI6ImVlYmNiZGZiLTc3MDEtNDljMS1iYWVjLTcwZjYyYjU4ZWFiZSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImZhMGI1YTYzLTcyMjItNGU4Mi1hMDQ3LTQ3ZTJlZjY2NTdlZjMxIiwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRJZCI6ImZhMGI1YTYzLTcyMjItNGU4Mi1hMDQ3LTQ3ZTJlZjY2NTdlZjMxIiwib3JnX2lkIjoiQ1JPQVQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtZmEwYjVhNjMtNzIyMi00ZTgyLWEwNDctNDdlMmVmNjY1N2VmMzEifQ.Rn5ZOB2Hl_UJEZ8iBqSY7eLTnpfJOa7Dd2wqk_uqotkAZ9SBW8bbyzaR9YlvBapAn39h63ibYZKnmKYnM2XX385UY2Qyyg4v4rgykSOc0AQ8rhhLPqMdrpkOMnBWliKUC9vRKyy6rH8KTSv27dDEJBWHKF1-nM4bBspH36pa1f2xtj2VD3N9nGeVdf81ppgDrxMqMxOxfJQ8xs5JHb1_19u2A4FBbpvjj0PRBVn_rMC6zWqqeaYXK5wdyfOJ7aOF2EDVSb_jRcRinT9sy1L2QJV_AoWjSo5uqG1D05hLXLsuVORCSxvychReYc4kxNsSUToa0iDoyj97EkWpXhCHnQ';
-
-const connectionProperties_VIEW_PIN: NIConnectionProperties = {
-  rootUrl: ROOT_URL_VIEW_PIN,
-  token: TEST_TOKEN_VIEW_PIN,
-};
 export const TEST_INPUT_VIEW_PIN: NiInputInterface = {
-  bankCode: 'CROAT',
-  cardIdentifierId: '40545400190652222937',
-  cardIdentifierType: 'EXID',
-  connectionProperties: connectionProperties_VIEW_PIN,
+  bankCode: BANK_CODE,
+  cardIdentifierId: CARD_ID,
+  cardIdentifierType: CARD_TYPE,
+  connectionProperties: connectionProperties,
   timer: 5,
   displayAttributes: displayAttributes,
 };
 
 export const cardInput_VIEW_PIN: NIInputInterface = {
-  bankCode: 'CROAT',
-  cardIdentifierId: '40545400190652222937',
-  cardIdentifierType: 'EXID',
-  connectionProperties: connectionProperties_VIEW_PIN,
+  bankCode: BANK_CODE,
+  cardIdentifierId: CARD_ID,
+  cardIdentifierType: CARD_TYPE,
+  connectionProperties: connectionProperties,
 };
