@@ -1,7 +1,7 @@
 export interface NIConnectionProperties {
   rootUrl: string;
   token: string;
-  extraNetworkHeaders: string;
+  extraHeaders: string;
 }
 
 export interface NIInputInterface {

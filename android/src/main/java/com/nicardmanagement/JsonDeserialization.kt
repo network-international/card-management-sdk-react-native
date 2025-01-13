@@ -14,21 +14,14 @@ fun deserializePerson(jsonString: String): NIInput? {
 
         val rootUrl = connectionPropertiesJsonObject.getString("rootUrl")
         val token = connectionPropertiesJsonObject.getString("token")
-
+        val extraNetworkHeadersString = connectionPropertiesJsonObject.getString("extraHeaders")
+        val headersJsonObject = JSONObject(extraNetworkHeadersString)
         val extraNetworkHeaders = mutableMapOf<String, String>()
-        val extraNetworkHeadersJsonObject = connectionPropertiesJsonObject.getJSONObject("extraNetworkHeaders")
-        if (extraNetworkHeadersJsonObject != null) {
-            val jsonMap = extraNetworkHeadersJsonObject.toMap()
-            val keysItr: Iterator<String> = jsonMap.keys()
-            while (keysItr.hasNext()) {
-                val key = keysItr.next()
-                var value: Any = this.get(key)
-                if (value is String) {
-                    extraNetworkHeaders[key] = value as String
-                }
-            }
-        }
 
+        //extraNetworkHeaders["apiuat_za_network_global"] = "qWyQt3D44Upner1T"
+        headersJsonObject.keys().forEach {
+          extraNetworkHeaders[it] = headersJsonObject.getString(it)
+        }
         val connectionProperties = NIConnectionProperties(
             rootUrl,
             token,
