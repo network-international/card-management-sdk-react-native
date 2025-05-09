@@ -15,24 +15,32 @@ export const useGetCardDetails = () => {
 
   const onGetCardDetails = (
     input: NiInputInterface,
-    callback: (error: NIErrorResponse | null, result: string | null) => void
-  ): void => {
+    callback: (err: NIErrorResponse | null, result: NIGetCardSuccessResponse | null) => void
+  ) => {
     setIsLoading(true);
     NICardManagementSDKModule.getCardDetails(
       formatInput(input),
-      (err: NIErrorResponse | null, res: NIGetCardSuccessResponse | null) => {
+      (err, res) => {
         setIsLoading(false);
         if (err) {
           setError(err);
-          callback && callback(err, null);
-        } else if (res) {
+          return callback(err, null);
+        }
+
+        if (res) {
           setResult(res);
           setError(null);
-          callback && callback(null, 'Card details retrieved with success!');
+          return callback(null, res); // ✅ Return actual result
         }
+
+        // fallback error response
+        return callback(
+          { domain: 'SDK', code: 'UNKNOWN_ERROR', message: 'Unknown SDK error' },
+          null
+        );
       }
     );
   };
 
   return { result, error, isLoading, onGetCardDetails };
-};
+}
