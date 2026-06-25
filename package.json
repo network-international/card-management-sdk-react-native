@@ -1,6 +1,6 @@
 {
   "name": "@networkinternational/ni-card-management-sdk",
-  "version": "1.0.4",
+  "version": "1.0.8",
   "description": "SDKs to help card issuers to consume our APIs from iOS applications.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
