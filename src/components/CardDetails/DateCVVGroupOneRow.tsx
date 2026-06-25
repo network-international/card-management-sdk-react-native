@@ -20,6 +20,23 @@ import { HEIGHT_CARD } from '../../config/configCard';
 import { themeColors } from '../../config/themeColors';
 import { PredeterminedIcon } from '../icons/PredeterminedIcon';
 
+const formatExpiryValue = (value: string): string => {
+  if (!value) {
+    return value;
+  }
+
+  const digits = value.replace(/\D/g, '');
+  if (digits.length === 4) {
+    return `${digits.slice(2)}/${digits.slice(0, 2)}`;
+  }
+
+  if (digits.length > 2) {
+    return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+  }
+
+  return value;
+};
+
 export function CardDetailsDateCVVGroupOneRow({
   expiry,
   clearCVV2,
@@ -35,7 +52,7 @@ export function CardDetailsDateCVVGroupOneRow({
   const expiryRendered = isError
     ? expiry
     : !cardDetailsVisible
-    ? expiry.replace(/(\d{2})/, '$&/')
+    ? formatExpiryValue(expiry)
     : '**/**';
   const clearCVV2Rendered = cardDetailsVisible
     ? clearCVV2.replace(/[0-9]/g, '*')
