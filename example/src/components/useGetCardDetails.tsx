@@ -15,24 +15,25 @@ interface UseGetCardDetailsHookInterface {
 export const UseGetCardDetailsHook = ({
   callback,
 }: UseGetCardDetailsHookInterface): JSX.Element => {
-  React.useEffect(
-    () =>
-      onGetCardDetails(
-        cardInput,
-        (error: NIErrorResponse | null, result: string | null = null) => {
-          console.log('onGetCardDetails example', { error, result });
-          callback();
-        }
-      ),
-    []
-  );
-
   const {
     result: getCardDetailsResult,
     error: getCardDetailsError,
     isLoading,
     onGetCardDetails,
   } = useGetCardDetails();
+  const onComplete = React.useEffectEvent(callback);
+
+  React.useEffect(
+    () =>
+      onGetCardDetails(
+        cardInput,
+        (error: NIErrorResponse | null, result: string | null = null) => {
+          console.log('onGetCardDetails example', { error, result });
+          onComplete();
+        }
+      ),
+    [onGetCardDetails]
+  );
 
   (!!getCardDetailsResult || !!getCardDetailsError) &&
     console.log('useGetCardDetails hook', {

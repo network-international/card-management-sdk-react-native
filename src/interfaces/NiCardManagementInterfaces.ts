@@ -13,7 +13,7 @@ export interface NIInputInterface {
 
 export interface NIErrorResponse {
   domain: string;
-  code: string;
+  code: string | number;
   message: string;
 }
 

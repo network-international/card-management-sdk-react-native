@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { type NIInputInterface } from '@networkinternational/ni-card-management-sdk';
+import { type ReactNode } from 'react';
+import { type NiInputInterface } from '@networkinternational/ni-card-management-sdk';
 import { InputContext } from './ContextView';
 import { TEST_INPUT } from '../config/config';
 
-export const InputProvider = ({ children }: { children: any }) => {
-  const [inputData, setInputData] = useState<NIInputInterface | null>(
+export const InputProvider = ({ children }: { children: ReactNode }) => {
+  const [inputData, setInputData] = useState<NiInputInterface | null>(
     TEST_INPUT
   );
 

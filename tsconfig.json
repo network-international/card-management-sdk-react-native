@@ -2,6 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
+      "@networkinternational/ni-card-management-sdk": ["./src/index"],
       "react-native-ni-card-management": ["./src/index"]
     },
     "allowUnreachableCode": false,
@@ -11,7 +12,7 @@
     "jsx": "react",
     "lib": ["esnext"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,

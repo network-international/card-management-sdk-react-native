@@ -11,10 +11,22 @@ This project is a monorepo managed using [Yarn workspaces](https://yarnpkg.com/f
 - The library package in the root directory.
 - An example app in the `example/` directory.
 
-To get started with the project, run `yarn` in the root directory to install the required dependencies for each package:
+The SDK accepts React Native 0.86.0 and later as a peer dependency. Development and the example app use the exact stable version recorded in `package.json` and `yarn.lock`; currently this is React Native 0.86.2. Renovate proposes newer stable versions as reviewable pull requests and excludes prereleases.
+
+Install Node.js 22.13.0 or newer in the Node 22 LTS line, JDK 17, Android SDK Platform 36, Build Tools 36.0.0, NDK 28.2.13676358, and CMake 3.22.1. On macOS, configure the environment before installing dependencies:
 
 ```sh
-yarn
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+nvm use
+corepack enable
+```
+
+To get started with the project, run `yarn install --immutable` in the root directory to install the locked dependencies for each package and the iOS pods:
+
+```sh
+yarn install --immutable
 ```
 
 > Since the project relies on Yarn workspaces, you cannot use [`npm`](https://github.com/npm/cli) for development.
@@ -38,7 +50,7 @@ yarn example start
 To run the example app on Android:
 
 ```sh
-yarn example android
+yarn example android --active-arch-only
 ```
 
 To run the example app on iOS:
@@ -46,6 +58,8 @@ To run the example app on iOS:
 ```sh
 yarn example ios
 ```
+
+Run Metro and the platform command in separate terminals. For a physical Android device, enable USB debugging and confirm that `adb devices` lists it. The app uses reverse port forwarding to reach Metro on port 8081.
 
 Make sure your code passes TypeScript and ESLint. Run the following to verify:
 

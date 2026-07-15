@@ -15,7 +15,11 @@ buildscript {
 }
 
 def isNewArchitectureEnabled() {
-  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+  if (project.hasProperty("NiCardManagement_newArchEnabled")) {
+    return project.getProperty("NiCardManagement_newArchEnabled") == "true"
+  }
+
+  return false
 }
 
 apply plugin: "com.android.library"
@@ -80,10 +84,17 @@ android {
 repositories {
   mavenCentral()
   google()
-  maven { url "https://jitpack.io" }
+  maven {
+    url "https://jitpack.io"
+    metadataSources {
+      mavenPom()
+      artifact()
+    }
+  }
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
+def native_sdk_version = getExtOrDefault("nativeSdkVersion")
 
 dependencies {
   // For < 0.71, this will be from the local maven repo
@@ -91,6 +102,6 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.github.network-international:card-management-sdk-android:1.0.49-alpha.4'
+  implementation "com.github.network-international:card-management-sdk-android:$native_sdk_version"
 }
 

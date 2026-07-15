@@ -15,6 +15,9 @@ interface UseChangePinHookInterface {
 export const UseChangePinHook = ({
   callback,
 }: UseChangePinHookInterface): JSX.Element => {
+  const { isLoading, onChangePin } = useChangePin();
+  const onComplete = React.useEffectEvent(callback);
+
   React.useEffect(
     () =>
       onChangePin(
@@ -23,18 +26,11 @@ export const UseChangePinHook = ({
         cardInput,
         (error: NIErrorResponse | null, result: string | null = null) => {
           console.log('onChangePin example', { error, result });
-          callback();
+          onComplete();
         }
       ),
-    []
+    [onChangePin]
   );
-
-  const {
-    // result: changePinResult,
-    // error: changePinError,
-    isLoading,
-    onChangePin,
-  } = useChangePin();
 
   // (!!changePinResult || !!changePinError) &&
   //   console.log('useChangePin hook', {

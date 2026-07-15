@@ -15,6 +15,9 @@ interface UseSetPinHookInterface {
 export const UseSetPinHook = ({
   callback,
 }: UseSetPinHookInterface): JSX.Element => {
+  const { isLoading, onSetPin } = useSetPin();
+  const onComplete = React.useEffectEvent(callback);
+
   React.useEffect(
     () =>
       onSetPin(
@@ -22,18 +25,11 @@ export const UseSetPinHook = ({
         cardInput,
         (error: NIErrorResponse | null, result: string | null = null) => {
           console.log('onSetPin example', { error, result });
-          callback();
+          onComplete();
         }
       ),
-    []
+    [onSetPin]
   );
-
-  const {
-    // result: setPinResult,
-    // error: setPinError,
-    isLoading,
-    onSetPin,
-  } = useSetPin();
 
   // (!!setPinResult || !!setPinError) &&
   //   console.log('useSetPin hook', {
