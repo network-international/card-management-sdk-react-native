@@ -3,10 +3,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type SetPinProps = NativeStackScreenProps<RootStackParamList, 'SetPin'>;
 
-import {
-  SetPinView,
-  NIErrorResponse,
-} from '@networkinternational/ni-card-management-sdk';
+import { SetPinView } from '@networkinternational/ni-card-management-sdk';
+import type { NIErrorResponse } from '@networkinternational/ni-card-management-sdk';
 import { type RootStackParamList } from '../navigation/RootNavigator';
 import { InputContext } from './ContextView';
 

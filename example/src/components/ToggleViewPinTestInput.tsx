@@ -1,39 +1,32 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, Pressable } from 'react-native';
 
 export default function ToggleViewPinTestInput({
   viewPinTestData,
   onChange,
+  color,
 }: {
   viewPinTestData: boolean;
-  onChange: any;
+  onChange: () => void;
+  color: string;
 }): JSX.Element {
   return (
-    <>
-      <TouchableOpacity onPress={onChange}>
-        {viewPinTestData ? (
-          <Text style={styles.noViewPinTestDataButton}>
-            No View Pin Test Data
-          </Text>
-        ) : (
-          <Text style={styles.viewPinTestDataButton}>View Pin Test Data</Text>
-        )}
-      </TouchableOpacity>
-    </>
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Toggle view pin test data preset"
+      onPress={onChange}
+    >
+      <Text style={[styles.textButton, { color }]}>
+        {viewPinTestData ? 'No View Pin Test Data' : 'View Pin Test Data'}
+      </Text>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  viewPinTestDataButton: {
+  textButton: {
     marginLeft: 10,
     marginRight: 10,
-    color: 'green',
-    fontSize: 20,
-  },
-  noViewPinTestDataButton: {
-    marginLeft: 10,
-    marginRight: 10,
-    color: 'red',
     fontSize: 20,
   },
 });

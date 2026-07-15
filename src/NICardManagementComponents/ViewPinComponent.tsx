@@ -29,8 +29,10 @@ function ViewPinComponent({
     });
 
   useEffect(() => {
-    input && onViewPin(input, callback);
-  }, []);
+    if (input) {
+      onViewPin(input, callback);
+    }
+  }, [input, callback, onViewPin]);
 
   return (
     <>

@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+      - 'releases/**'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 22.13.0
+  POD_INSTALL: '0'
+
+jobs:
+  quality:
+    name: Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn typecheck
+      - run: yarn lint
+      - run: yarn test --runInBand
+      - name: Reject tracked generated outputs
+        shell: bash
+        run: |
+          tracked=$(git ls-files | grep -E '(^|/)(build|dist|generated|DerivedData|Pods|node_modules|\.gradle|\.cxx|lib|coverage)/' || true)
+          if [[ -n "$tracked" ]]; then
+            echo "$tracked"
+            exit 1
+          fi
+
+  android:
+    name: Android example
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;28.2.13676358' 'cmake;3.22.1'
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn example build:android
+
+  ios:
+    name: iOS example
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: example
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: bundle exec pod install --project-directory=ios
+        working-directory: example
+      - run: yarn example build:ios

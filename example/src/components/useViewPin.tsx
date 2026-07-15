@@ -15,24 +15,25 @@ interface UseViewPinHookInterface {
 export const UseViewPinHook = ({
   callback,
 }: UseViewPinHookInterface): JSX.Element => {
-  React.useEffect(
-    () =>
-      onViewPin(
-        cardInput_VIEW_PIN,
-        (error: NIErrorResponse | null, result: string | null = null) => {
-          console.log('onViewPin example', { error, result });
-          callback();
-        }
-      ),
-    []
-  );
-
   const {
     result: viewPinResult,
     error: viewPinError,
     isLoading,
     onViewPin,
   } = useViewPin();
+  const onComplete = React.useEffectEvent(callback);
+
+  React.useEffect(
+    () =>
+      onViewPin(
+        cardInput_VIEW_PIN,
+        (error: NIErrorResponse | null, result: string | null = null) => {
+          console.log('onViewPin example', { error, result });
+          onComplete();
+        }
+      ),
+    [onViewPin]
+  );
 
   (!!viewPinResult || !!viewPinError) &&
     console.log('useViewPin hook', {

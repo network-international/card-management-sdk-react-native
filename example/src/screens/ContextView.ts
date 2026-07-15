@@ -1,9 +1,9 @@
 import { createContext } from 'react';
-import { NIInputInterface } from '@networkinternational/ni-card-management-sdk';
+import { type NiInputInterface } from '@networkinternational/ni-card-management-sdk';
 
 interface ContextProps {
-  readonly inputData: NIInputInterface | null;
-  readonly setInputData: (inputData: NIInputInterface) => void;
+  readonly inputData: NiInputInterface | null;
+  readonly setInputData: (inputData: NiInputInterface) => void;
   readonly loadInputData: () => Promise<void>;
 }
 

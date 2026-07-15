@@ -7,11 +7,11 @@ import {
   NILanguageEnum,
   NIThemeEnum,
   type NiInputInterface,
+  type NIBaseInputInterface,
   type NICardAttributes,
   type NIDisplayAttributes,
   type NICardDetailsTextPositioning,
   type NIConnectionProperties,
-  type NIInputInterface,
 } from '@networkinternational/ni-card-management-sdk';
 
 const textPositioning: NICardDetailsTextPositioning = {
@@ -88,11 +88,10 @@ const BANK_CODE = 'FIID';
 const CARD_ID = '535067XXXXXX4945XXXX';
 const CARD_TYPE = 'EXID';
 
-
 const connectionProperties: NIConnectionProperties = {
   rootUrl: ROOT_URL,
   token: TEST_TOKEN,
-  extraHeaders: "{ \"custom-header\": \"custom-value\" }"
+  extraHeaders: '{ "custom-header": "custom-value" }',
 };
 
 export const TEST_INPUT: NiInputInterface = {
@@ -106,7 +105,7 @@ export const TEST_INPUT: NiInputInterface = {
   timer: 5,
 };
 
-export const cardInput: NIInputInterface = {
+export const cardInput: NIBaseInputInterface = {
   bankCode: BANK_CODE,
   cardIdentifierId: CARD_ID,
   cardIdentifierType: CARD_TYPE,
@@ -122,7 +121,7 @@ export const TEST_INPUT_VIEW_PIN: NiInputInterface = {
   displayAttributes: displayAttributes,
 };
 
-export const cardInput_VIEW_PIN: NIInputInterface = {
+export const cardInput_VIEW_PIN: NIBaseInputInterface = {
   bankCode: BANK_CODE,
   cardIdentifierId: CARD_ID,
   cardIdentifierType: CARD_TYPE,
