@@ -11,4 +11,6 @@ export type {
   NIGetCardSuccessResponse,
 };
 
+export type { NIInputInterface as NIBaseInputInterface } from '../interfaces/NiCardManagementInterfaces';
+
 export * from '../interfaces/NiInputInterfaces';

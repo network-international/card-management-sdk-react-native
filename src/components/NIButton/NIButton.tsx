@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { type TextStyle } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Pressable, Text, type TextStyle, type ViewStyle } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
@@ -34,6 +33,28 @@ function NIButton({
   const buttonStyle: TextStyle = {
     opacity: opacity,
   };
+  const resolvedMode = mode ?? 'text';
+
+  const contentStyle: ViewStyle = {
+    borderRadius: 20,
+    borderWidth: resolvedMode === 'outlined' ? 1 : 0,
+    borderColor: 'rgba(255, 255, 255, 0.7)',
+    backgroundColor:
+      resolvedMode === 'contained' || resolvedMode === 'contained-tonal'
+        ? 'rgba(0, 0, 0, 0.12)'
+        : 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  };
+
+  const titleStyle: TextStyle = {
+    color: disabled ? 'rgba(0, 0, 0, 0.35)' : textColor || '#111111',
+    fontSize: 14,
+    fontWeight: '600',
+  };
+
   return (
     <LinearGradient
       start={{ x: 0, y: 0 }}
@@ -42,14 +63,17 @@ function NIButton({
       style={[styles.button, buttonStyle]}
       colors={(!disabled && colors) || defaultLinearGradientColors}
     >
-      <Button
-        mode={mode}
-        textColor={textColor}
+      <Pressable
+        accessibilityRole="button"
         disabled={disabled}
         onPress={onPress}
+        style={({ pressed }) => [
+          contentStyle,
+          pressed && !disabled ? { opacity: 0.8 } : null,
+        ]}
       >
-        {title}
-      </Button>
+        <Text style={titleStyle}>{title}</Text>
+      </Pressable>
     </LinearGradient>
   );
 }

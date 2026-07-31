@@ -1,35 +1,34 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Pressable } from 'react-native';
 
 export default function ShowHide({
   isShowHide,
   onChange,
+  color,
 }: {
   isShowHide: boolean;
-  onChange: any;
+  onChange: () => void;
+  color: string;
 }): JSX.Element {
   return (
-    <TouchableOpacity onPress={onChange}>
-      {isShowHide ? (
-        <Text style={styles.hideTextButton}>Hide card details</Text>
-      ) : (
-        <Text style={styles.showTextButton}>Show card details</Text>
-      )}
-    </TouchableOpacity>
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={
+        isShowHide ? 'Hide card details' : 'Show card details'
+      }
+      onPress={onChange}
+    >
+      <Text style={[styles.textButton, { color }]}>
+        {isShowHide ? 'Hide card details' : 'Show card details'}
+      </Text>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  showTextButton: {
+  textButton: {
     marginLeft: 10,
     marginRight: 10,
-    color: 'green',
-    fontSize: 20,
-  },
-  hideTextButton: {
-    marginLeft: 10,
-    marginRight: 10,
-    color: 'red',
     fontSize: 20,
   },
 });

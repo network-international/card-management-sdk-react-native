@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import {
-  VerifyPinView,
-  NIErrorResponse,
-} from '@networkinternational/ni-card-management-sdk';
+import { VerifyPinView } from '@networkinternational/ni-card-management-sdk';
+import type { NIErrorResponse } from '@networkinternational/ni-card-management-sdk';
 import { type RootStackParamList } from '../navigation/RootNavigator';
 import { InputContext } from './ContextView';
 

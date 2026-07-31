@@ -1,36 +1,33 @@
 import { NIThemeEnum } from '@networkinternational/ni-card-management-sdk';
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Pressable } from 'react-native';
 
 export default function ToggleThemeButton({
   theme,
   onChange,
+  color,
 }: {
   theme: string;
-  onChange: any;
+  onChange: () => void;
+  color: string;
 }): JSX.Element {
   return (
-    <TouchableOpacity onPress={onChange}>
-      {theme === NIThemeEnum.light ? (
-        <Text style={styles.lightTextButton}>light</Text>
-      ) : (
-        <Text style={styles.darkTextButton}>dark</Text>
-      )}
-    </TouchableOpacity>
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Toggle theme"
+      onPress={onChange}
+    >
+      <Text style={[styles.textButton, { color }]}>
+        {theme === NIThemeEnum.light ? 'Light' : 'Dark'}
+      </Text>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  lightTextButton: {
+  textButton: {
     marginLeft: 10,
     marginRight: 10,
-    color: 'green',
-    fontSize: 20,
-  },
-  darkTextButton: {
-    marginLeft: 10,
-    marginRight: 10,
-    color: 'red',
     fontSize: 20,
   },
 });

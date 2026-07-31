@@ -32,8 +32,10 @@ function CardDetailsComponent({
   } = useGetCardDetails();
 
   useEffect(() => {
-    input && onGetCardDetails(input, callback);
-  }, []);
+    if (input) {
+      onGetCardDetails(input, callback);
+    }
+  }, [input, callback, onGetCardDetails]);
 
   const error_getCardDetailsResult: NIGetCardSuccessResponse = {
     clearPan: '-',
