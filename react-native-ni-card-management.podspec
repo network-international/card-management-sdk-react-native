@@ -16,9 +16,12 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "12.0" }
+  s.platforms    = { :ios => "15.1" }
   s.source       = { :git => source_url, :tag => "v#{s.version}" }
   s.source_files = "ios/**/*.{h,m,mm,swift}"
+
+  s.exclude_files = "ios/NiCardManagement-Bridging-Header.h"
+  s.swift_version = "5.0"
 
   s.dependency "NICardManagementSDK", '2.1.7'
   # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.
