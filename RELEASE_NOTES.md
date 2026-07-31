@@ -1,13 +1,12 @@
 # React Native Card Management SDK v2.0.0
 
-Status: Draft
-
 Version 2.0.0 updates the SDK and example application for React Native 0.86, React 19, and the current Network International native card-management SDKs. It also aligns Android and iOS bridge behavior, removes obsolete dependencies and generated files, and adds reproducible CI and dependency-update automation.
 
 ## Breaking changes and requirements
 
 - React Native `>=0.86.0` is now required. The SDK and example application are tested with React Native `0.86.2`.
 - React `>=19.2.7` is now required.
+- iOS `15.1` or later is now required by the React Native 0.86 dependency stack.
 - Node.js `>=22.13.0` is required to build and maintain the repository. This is a development-tooling requirement and does not affect an installed mobile application's runtime.
 - The example application uses React Native's New Architecture startup path and requires the generated `ReactNativeApplicationEntryPoint` and `ReactHost` integration.
 - `react-native-paper` has been removed. Applications that used it only because it was previously listed by this SDK no longer need to install it.

@@ -11,7 +11,7 @@ The current supported features are:
 5. View PIN: Displays a component providing the ability to show PIN card. The PIN is end to end encrypted to securely transport this sensitive information
 
 ## Requirements
-The SDK supports React Native 0.86.0 and later and iOS 12 and later. The repository and example app pin React Native 0.86.2, which is the currently tested and recommended version. Newer stable React Native versions are allowed by the peer dependency and become officially tested when the repository's automated dependency update passes Android and iOS CI.
+The SDK supports React Native 0.86.0 and later and iOS 15.1 and later. The repository and example app pin React Native 0.86.2, which is the currently tested and recommended version. Newer stable React Native versions are allowed by the peer dependency and become officially tested when the repository's automated dependency update passes Android and iOS CI.
 
 Development requires the following toolchain:
 
@@ -24,7 +24,7 @@ Development requires the following toolchain:
 | Android Build Tools | 36.0.0 |
 | Android NDK | 28.2.13676358 (r28c) |
 | CMake | 3.22.1 |
-| Xcode | A version that supports the installed iOS SDK and iOS 12 deployment target |
+| Xcode | A version that supports the installed iOS SDK and iOS 15.1 deployment target |
 
 Gradle 9.3.1 is downloaded by the wrapper. React Native, the React Native CLI, the Android Gradle Plugin, and Kotlin are installed through Yarn and Gradle and do not need separate global installations.
 

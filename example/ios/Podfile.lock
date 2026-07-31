@@ -1931,7 +1931,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-ni-card-management (1.0.8):
+  - react-native-ni-card-management (2.0.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -3024,7 +3024,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 187c03c70cba972bba8786b581897d8e1ae6bdc3
   React-microtasksnativemodule: e130d410da41cad9b9776c492e6f8c07ad7b34df
   React-mutationobservernativemodule: 7f5f4da31e906da2100a432672c55cb2096570e1
-  react-native-ni-card-management: 552ae72811b9e0b58bbe2b3ca61e867e49f001fc
+  react-native-ni-card-management: 22bb517c3a836cde0bcd143a60f9593cc5ada045
   react-native-safe-area-context: ebd2c2ece5e6e650a6963184039ec8cfd8960d86
   React-NativeModulesApple: 964558d22b90c45c1ad5900410addd8e2362e9a2
   React-networking: ac799e9c5ccd2d62435a2f41dc2833cc4ec331a8
