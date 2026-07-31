@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   I18nManager,
 } from 'react-native';
-import { useClipboard } from '@react-native-community/clipboard';
+import { useClipboard } from '@react-native-clipboard/clipboard';
 
 import {
   type NIFontLabelPair,

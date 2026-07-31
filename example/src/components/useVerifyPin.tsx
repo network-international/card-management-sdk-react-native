@@ -15,6 +15,9 @@ interface UseVerifyPinHookInterface {
 export const UseVerifyPinHook = ({
   callback,
 }: UseVerifyPinHookInterface): JSX.Element => {
+  const { isLoading, onVerifyPin } = useVerifyPin();
+  const onComplete = React.useEffectEvent(callback);
+
   React.useEffect(
     () =>
       onVerifyPin(
@@ -22,18 +25,11 @@ export const UseVerifyPinHook = ({
         cardInput,
         (error: NIErrorResponse | null, result: string | null = null) => {
           console.log('onVerifyPin example', { error, result });
-          callback();
+          onComplete();
         }
       ),
-    []
+    [onVerifyPin]
   );
-
-  const {
-    // result: verifyPinResult,
-    // error: verifyPinError,
-    isLoading,
-    onVerifyPin,
-  } = useVerifyPin();
 
   // (!!verifyPinResult || !!verifyPinError) &&
   //   console.log('useVerifyPin hook', {

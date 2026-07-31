@@ -3,10 +3,8 @@ import { type NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { type RootStackParamList } from '../navigation/RootNavigator';
 import { InputContext } from './ContextView';
-import {
-  NIErrorResponse,
-  ViewPinComponent,
-} from '@networkinternational/ni-card-management-sdk';
+import { ViewPinComponent } from '@networkinternational/ni-card-management-sdk';
+import type { NIErrorResponse } from '@networkinternational/ni-card-management-sdk';
 import { View, type TextStyle } from 'react-native';
 
 type ViewPinProps = NativeStackScreenProps<

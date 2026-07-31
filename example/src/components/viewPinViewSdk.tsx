@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {
-  ViewPinView,
+  ViewPinComponent,
   type NIErrorResponse,
   NIPinTypeEnum,
   NIThemeEnum,
@@ -23,7 +23,7 @@ export function ViewPinViewSdk({
   };
   return (
     <>
-      <ViewPinView
+      <ViewPinComponent
         input={TEST_INPUT_VIEW_PIN}
         type={type}
         callback={(

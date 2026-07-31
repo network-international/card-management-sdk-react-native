@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "ignoreUnstable": true,
+  "rangeStrategy": "pin",
+  "packageRules": [
+    {
+      "description": "Update the React Native ecosystem together",
+      "matchPackageNames": [
+        "react",
+        "react-native",
+        "/^@react-native\\//",
+        "/^@react-native-community\\/cli/"
+      ],
+      "groupName": "react native ecosystem",
+      "rangeStrategy": "pin"
+    },
+    {
+      "description": "Preserve the SDK's open-ended React Native peer minimum",
+      "matchFileNames": ["package.json"],
+      "matchDepTypes": ["peerDependencies"],
+      "matchPackageNames": ["react", "react-native"],
+      "enabled": false
+    }
+  ]
+}

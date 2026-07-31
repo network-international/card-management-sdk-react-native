@@ -132,7 +132,7 @@ export function CardDetailsDateCVVGroupOneRow({
       style={[
         styles.containerDateCVVContentGroupTopAlignment,
         containerDateCVVContentGroupTopAlignmentStyle,
-        I18nManager.isRTL ? {flexDirection: 'row-reverse'} : {}
+        I18nManager.isRTL ? { flexDirection: 'row-reverse' } : {},
       ]}
     >
       <Text style={[styles.textLabel, labelStyleText]}>

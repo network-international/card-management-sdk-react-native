@@ -25,7 +25,8 @@ const arabic = {
   cardHolderName: 'الإسم',
   enterNewCardPin: '\u200Eالرجاء ادخال الرقم السري الجديد (PIN)',
   confirmCardPIN: '\u200Eيرجى إعادة إدخال رقم السري لبطاقتك (PIN)',
-  wrongCardPin: '\u200Eالرقم السري لبطاقتك غير متطابق\n\u200Eيرجى إعادة إدخال رقم السري لبطاقتك (PIN)',
+  wrongCardPin:
+    '\u200Eالرقم السري لبطاقتك غير متطابق\n\u200Eيرجى إعادة إدخال رقم السري لبطاقتك (PIN)',
   enterCurrentCardPin: '\u200Eالرجاء ادخال الرقم السري الحالي (PIN)',
   enterVerifyCardPin: '\u200Eالرجاء إدخال رقم السري لبطاقتك للتحقق (PIN)',
   verifyPinButtonLabel: 'التحقق من رقم السري لبطاقتك',

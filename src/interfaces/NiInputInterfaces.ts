@@ -1,6 +1,6 @@
 import type { ImageURISource } from 'react-native';
 
-import type { NIInputInterface } from './NiCardManagementInterfaces';
+import type { NIInputInterface as NIBaseInputInterface } from './NiCardManagementInterfaces';
 
 export interface NICardDetailsTextPositioning {
   leftAlignment?: number;
@@ -72,7 +72,11 @@ export interface NIDisplayAttributes {
   cardAttributes?: NICardAttributes;
 }
 
-export interface NiInputInterface extends NIInputInterface {
+export type NICommonInputInterface = NIBaseInputInterface;
+
+export interface NiInputInterface extends NICommonInputInterface {
   timer?: number;
   displayAttributes?: NIDisplayAttributes;
 }
+
+export type NIInputWithDisplayAttributes = NiInputInterface;

@@ -1,35 +1,63 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
+import { type SampleThemeColors } from '../config/sampleTheme';
 
 export default function TextInputManagementCardDetail({
   label,
   value,
   textInput,
   onChange,
+  colors,
 }: {
   label: string;
   value: string;
-  textInput?: object;
-  onChange: any;
+  textInput?: StyleProp<ViewStyle>;
+  onChange: (value: string) => void;
+  colors: SampleThemeColors;
 }): JSX.Element {
   return (
-    <TextInput
-      outlineColor="gray"
-      label={label}
-      placeholder={label}
-      value={value}
-      onChangeText={onChange}
-      style={[styles.textInput, textInput]}
-      theme={{ colors: { text: 'white', primary: 'rgb(33, 151, 186)' } }}
-    />
+    <View style={[styles.fieldContainer, textInput]}>
+      <Text style={[styles.label, { color: colors.mutedText }]}>{label}</Text>
+      <TextInput
+        placeholder={label}
+        placeholderTextColor={colors.mutedText}
+        selectionColor={colors.accent}
+        value={value}
+        onChangeText={onChange}
+        style={[
+          styles.textInput,
+          {
+            backgroundColor: colors.surface,
+            borderColor: colors.border,
+            color: colors.text,
+          },
+        ]}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  textInput: {
+  fieldContainer: {
     margin: 5,
     width: '95%',
+  },
+  label: {
+    marginBottom: 4,
+    marginLeft: 2,
+    fontSize: 12,
+  },
+  textInput: {
     borderRadius: 5,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
   },
 });

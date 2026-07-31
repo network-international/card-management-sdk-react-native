@@ -1,38 +1,33 @@
 import { NILanguageEnum } from '@networkinternational/ni-card-management-sdk';
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Pressable } from 'react-native';
 
 export default function ToggleLanguageButton({
   language,
   onChange,
+  color,
 }: {
   language: string;
-  onChange: any;
+  onChange: () => void;
+  color: string;
 }): JSX.Element {
   return (
-    <>
-      <TouchableOpacity onPress={onChange}>
-        {language === NILanguageEnum.english ? (
-          <Text style={styles.englishTextButton}>English</Text>
-        ) : (
-          <Text style={styles.arabicTextButton}>Arabic</Text>
-        )}
-      </TouchableOpacity>
-    </>
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Toggle language"
+      onPress={onChange}
+    >
+      <Text style={[styles.textButton, { color }]}>
+        {language === NILanguageEnum.english ? 'English' : 'Arabic'}
+      </Text>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  englishTextButton: {
+  textButton: {
     marginLeft: 10,
     marginRight: 10,
-    color: 'green',
-    fontSize: 20,
-  },
-  arabicTextButton: {
-    marginLeft: 10,
-    marginRight: 10,
-    color: 'red',
     fontSize: 20,
   },
 });
