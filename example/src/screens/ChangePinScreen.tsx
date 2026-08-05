@@ -7,6 +7,7 @@ import {
 } from '@networkinternational/ni-card-management-sdk';
 import { type RootStackParamList } from '../navigation/RootNavigator';
 import { InputContext } from './ContextView';
+import { goBackWithFeedback } from '../utils/goBackWithFeedback';
 
 type ChangePinProps = NativeStackScreenProps<RootStackParamList, 'ChangePin'>;
 
@@ -23,7 +24,7 @@ function ChangePinScreen({ navigation, route }: ChangePinProps): JSX.Element {
         result: string | null = null
       ) => {
         console.log('ChangePinScreen - callback', { error, result });
-        navigation.goBack();
+        goBackWithFeedback(navigation, error, result);
       }}
     />
   );

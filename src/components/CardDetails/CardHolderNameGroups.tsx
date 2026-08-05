@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   I18nManager,
 } from 'react-native';
-import { useClipboard } from '@react-native-clipboard/clipboard';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import {
   type NIFontLabelPair,
@@ -26,8 +26,6 @@ export function CardDetailsCardHolderNameGroups({
   displayAttributes,
   setTimeOut,
 }: NICardDetailsCardHolderNameGroups): JSX.Element {
-  const [data, setString] = useClipboard();
-
   const maskedCardholderName = cardholderName.replace(
     /\b\w*/g,
     function (s: string) {
@@ -65,12 +63,12 @@ export function CardDetailsCardHolderNameGroups({
     fontFamily: textFont.name,
   };
 
-  async function handleOnPress(): Promise<void> {
-    await setString(cardholderName);
+  function handleOnPress(): void {
+    // Write directly so iOS does not request permission to read the pasteboard.
+    Clipboard.setString(cardholderName);
     setIsVisibleCopiedButton(true);
     setTimeOut();
   }
-  !!data && console.log('clipboard', data);
 
   return (
     <>

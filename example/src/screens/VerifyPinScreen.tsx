@@ -5,6 +5,7 @@ import { VerifyPinView } from '@networkinternational/ni-card-management-sdk';
 import type { NIErrorResponse } from '@networkinternational/ni-card-management-sdk';
 import { type RootStackParamList } from '../navigation/RootNavigator';
 import { InputContext } from './ContextView';
+import { goBackWithFeedback } from '../utils/goBackWithFeedback';
 
 type VerifyPinProps = NativeStackScreenProps<RootStackParamList, 'VerifyPin'>;
 
@@ -21,7 +22,7 @@ function VerifyPinScreen({ navigation, route }: VerifyPinProps): JSX.Element {
         result: string | null = null
       ) => {
         console.log('VerifyPinScreen - callback', { error, result });
-        navigation.goBack();
+        goBackWithFeedback(navigation, error, result);
       }}
     />
   );
