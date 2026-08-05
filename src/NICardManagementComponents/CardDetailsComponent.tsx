@@ -8,6 +8,8 @@ import { useGetCardDetails } from '../hooks/useGetCardDetails';
 import { NIThemeEnum } from '../interfaces/NiInputInterfaces';
 import type { NIGetCardSuccessResponse } from '../interfaces/NiCardManagementInterfaces';
 import { themeColors } from '../config/themeColors';
+import { FeedbackPopup } from '../components/FeedbackPopup/FeedbackPopup';
+import localLabels from '../utils/localization';
 
 function CardDetailsComponent({
   input,
@@ -15,6 +17,7 @@ function CardDetailsComponent({
 }: NICardDetailsComponent): JSX.Element {
   const { displayAttributes } = input || {};
   const theme = displayAttributes?.theme || NIThemeEnum.light;
+  const language = displayAttributes?.language || 'english';
   const cardDetailsStyle: TextStyle = {
     height: '100%',
     width: '100%',
@@ -62,6 +65,14 @@ function CardDetailsComponent({
           isCardDetails={true}
         />
       </View>
+      <FeedbackPopup
+        error={getCardDetailsError}
+        isLoading={getCardDetailsIsLoading}
+        isSuccess={!!getCardDetailsResult}
+        language={language}
+        successMessage={localLabels(language).cardDetailsSuccess}
+        theme={theme}
+      />
     </View>
   );
 }

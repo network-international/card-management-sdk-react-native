@@ -1,3 +1,33 @@
+# React Native Card Management SDK v2.0.1
+
+Version 2.0.1 is a patch release that improves React Native 0.86 iOS compatibility, clipboard privacy, and operation feedback. It does not introduce breaking API changes.
+
+## Fixes and improvements
+
+- Fixed the example iOS application startup for React Native 0.86 by configuring `RCTAppDependencyProvider` and using the current `bundleURL` delegate method.
+- Changed card number and cardholder name copy actions to write directly to the clipboard, preventing unnecessary iOS pasteboard read-permission prompts.
+- Added reusable, themed, and localized success/error feedback for Card Details and View PIN operations.
+- Removed sensitive View PIN result logging from the JavaScript console.
+- Updated the example Set PIN, Change PIN, and Verify PIN flows to return to the previous screen before presenting success or error feedback.
+- Deferred post-navigation PIN feedback until React Native interactions complete, preventing feedback from being lost when the operation screen unmounts.
+
+## Requirements
+
+- React Native `>=0.86.0`
+- React `>=19.2.7`
+- iOS `15.1` or later
+- `@react-native-clipboard/clipboard` `>=1.16.3`
+- `react-native-linear-gradient` `>=2.8.3`
+
+## Validation
+
+- TypeScript type checking
+- Jest tests
+- ESLint
+- iOS simulator application build and launch
+
+---
+
 # React Native Card Management SDK v2.0.0
 
 Version 2.0.0 updates the SDK and example application for React Native 0.86, React 19, and the current Network International native card-management SDKs. It also aligns Android and iOS bridge behavior, removes obsolete dependencies and generated files, and adds reproducible CI and dependency-update automation.

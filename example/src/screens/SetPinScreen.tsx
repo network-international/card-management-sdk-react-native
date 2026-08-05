@@ -7,6 +7,7 @@ import { SetPinView } from '@networkinternational/ni-card-management-sdk';
 import type { NIErrorResponse } from '@networkinternational/ni-card-management-sdk';
 import { type RootStackParamList } from '../navigation/RootNavigator';
 import { InputContext } from './ContextView';
+import { goBackWithFeedback } from '../utils/goBackWithFeedback';
 
 function SetPinScreen({ navigation, route }: SetPinProps): JSX.Element {
   const { inputData: input } = useContext(InputContext);
@@ -21,7 +22,7 @@ function SetPinScreen({ navigation, route }: SetPinProps): JSX.Element {
         result: string | null = null
       ) => {
         console.log('SetPinScreen - callback', { error, result });
-        navigation.goBack();
+        goBackWithFeedback(navigation, error, result);
       }}
     />
   );
