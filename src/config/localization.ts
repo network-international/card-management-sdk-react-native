@@ -12,6 +12,11 @@ const english = {
   setPinButtonLabel: 'Set PIN',
   changePinButtonLabel: 'Change PIN',
   copiedToClipboard: 'Copied to clipboard',
+  successTitle: 'Success',
+  errorTitle: 'Error',
+  ok: 'OK',
+  cardDetailsSuccess: 'Card details retrieved successfully.',
+  viewPinSuccess: 'PIN retrieved successfully.',
   viewPinCountdownLabel: (count: number) =>
     'PIN will be hidden in ' + count + ' seconds',
   show: 'Show',
@@ -33,6 +38,11 @@ const arabic = {
   setPinButtonLabel: 'تعيين الرقم السري',
   changePinButtonLabel: '\u200Eتغيير الرقم السري (PIN)',
   copiedToClipboard: 'تم النسخ إلى الحافظة',
+  successTitle: 'تم بنجاح',
+  errorTitle: 'خطأ',
+  ok: 'حسنًا',
+  cardDetailsSuccess: 'تم استرداد تفاصيل البطاقة بنجاح.',
+  viewPinSuccess: 'تم استرداد الرقم السري بنجاح.',
   viewPinCountdownLabel: (count: number) =>
     '\u200Eثواني\u200E ' + count + '\u200E سيتم إخفاء الرقم السري للبطاقة خلال',
   show: '\u200Eعرض',

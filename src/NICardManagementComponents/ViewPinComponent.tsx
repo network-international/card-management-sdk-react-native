@@ -5,6 +5,8 @@ import { type NIViewPinComponent } from '../interfaces/NiInterfaces';
 import { useViewPin } from '../hooks/useViewPin';
 import PinState from '../components/PinState/PinState';
 import ViewPin from '../components/ViewPin/ViewPin';
+import { FeedbackPopup } from '../components/FeedbackPopup/FeedbackPopup';
+import localLabels from '../utils/localization';
 
 function ViewPinComponent({
   input,
@@ -12,6 +14,7 @@ function ViewPinComponent({
   callback,
 }: NIViewPinComponent): JSX.Element {
   const theme = input?.displayAttributes?.theme || NIThemeEnum.light;
+  const language = input?.displayAttributes?.language || 'english';
   const countdownTime = input?.timer;
 
   const {
@@ -20,13 +23,6 @@ function ViewPinComponent({
     isLoading: isViewPinLoading,
     onViewPin,
   } = useViewPin();
-
-  (!!viewPinResult || !!viewPinError) &&
-    console.log('ViewPinView', {
-      viewPinResult,
-      viewPinError,
-      isViewPinLoading,
-    });
 
   useEffect(() => {
     if (input) {
@@ -43,6 +39,14 @@ function ViewPinComponent({
         countdownTime={countdownTime || 0}
       />
       <PinState isLoading={isViewPinLoading} theme={theme} />
+      <FeedbackPopup
+        error={viewPinError}
+        isLoading={isViewPinLoading}
+        isSuccess={!!viewPinResult}
+        language={language}
+        successMessage={localLabels(language).viewPinSuccess}
+        theme={theme}
+      />
     </>
   );
 }
