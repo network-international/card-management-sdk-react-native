@@ -6,7 +6,7 @@ import {
   Text,
   I18nManager,
 } from 'react-native';
-import { useClipboard } from '@react-native-clipboard/clipboard';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import {
   type NIFontLabelPair,
@@ -27,8 +27,6 @@ export function CardDetailsCardNumberGroup({
   displayAttributes,
   setTimeOut,
 }: NICardDetailsCardNumberGroup): JSX.Element {
-  const [data, setString] = useClipboard();
-
   const clearPanRendered = clearPan.replace(/.{4}/g, '$& ');
   const maskedPanRendered = maskedPan
     .replace(/[a-zA-Z0-9]+(?=....)/g, function (s: string) {
@@ -65,12 +63,12 @@ export function CardDetailsCardNumberGroup({
     fontFamily: textFont.name,
   };
 
-  async function handleOnPress(): Promise<void> {
-    await setString(clearPan);
+  function handleOnPress(): void {
+    // Write directly so iOS does not request permission to read the pasteboard.
+    Clipboard.setString(clearPan);
     setIsVisibleCopiedButton(true);
     setTimeOut();
   }
-  !!data && console.log('clipboard', data);
 
   return (
     <>
