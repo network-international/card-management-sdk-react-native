@@ -84,3 +84,7 @@ lib/
 # Test and package outputs
 coverage/
 dist/
+
+# Local working notes, intentionally untracked
+TODO.md
+*.code-workspace
