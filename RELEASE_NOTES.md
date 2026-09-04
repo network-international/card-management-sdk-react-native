@@ -1,3 +1,19 @@
+# React Native Card Management SDK v2.1.0
+
+## Fixes and improvements
+
+- Fixed `No provider succeeded to generate a self-signed certificate` failures in minified or obfuscated Android applications. The Android native SDK is updated to `2.3.0`, which ships the BouncyCastle and SDK keep rules required for in-memory certificate generation through `consumerProguardFiles`; they are applied automatically by R8, ProGuard and DexGuard with no integration steps.
+- The native SDK now reports the underlying cause when self-signed certificate generation fails, instead of a generic message.
+- Android bridge errors now report the exception cause chain when one is present, making shrinker-related failures diagnosable from JavaScript.
+- The example application now builds release variants with `minifyEnabled` and R8 full mode enabled, acting as a regression guard for the keep rules shipped by the native SDK. Added the `build:android:release` script.
+- Documented ProGuard, R8 and DexGuard requirements, including the DexGuard-only encryption and reflection-obfuscation exclusions, in `README.md`.
+
+## Requirements
+
+- Android native SDK `2.3.0` or later for automatic shrinker keep rules
+
+---
+
 # React Native Card Management SDK v2.0.1
 
 Version 2.0.1 is a patch release that improves React Native 0.86 iOS compatibility, clipboard privacy, and operation feedback. It does not introduce breaking API changes.

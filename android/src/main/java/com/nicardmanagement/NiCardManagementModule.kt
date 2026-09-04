@@ -21,6 +21,18 @@ class NiCardManagementModule(reactContext: ReactApplicationContext) :
     return NAME
   }
 
+  // The native SDK can wrap root causes (e.g. a stripped BouncyCastle provider) in generic
+  // messages, so the whole chain is reported when there is one.
+  private fun describe(throwable: Throwable): String {
+    val chain = generateSequence(throwable) { it.cause }.toList()
+    if (chain.size == 1) {
+      return throwable.message ?: throwable::class.java.simpleName
+    }
+    return chain.joinToString(" | caused by ") {
+      "${it::class.java.simpleName}: ${it.message ?: "no message"}"
+    }
+  }
+
       @ReactMethod
     fun getCardDetails(inputJsonString: String, cb: Callback) {
         val scope = CoroutineScope(Dispatchers.Main)
@@ -47,7 +59,7 @@ class NiCardManagementModule(reactContext: ReactApplicationContext) :
                     cb.invoke("Error parsing input JSON", null)
                 }
             } catch (e: Exception) {
-                cb.invoke(e.message, null)
+                cb.invoke(describe(e), null)
             }
         }
     }
@@ -74,7 +86,7 @@ class NiCardManagementModule(reactContext: ReactApplicationContext) :
                     cb.invoke("Error parsing input JSON", null)
                 }
             } catch (e: Exception) {
-                cb.invoke(e.message, null)
+                cb.invoke(describe(e), null)
             }
         }
     }
@@ -100,7 +112,7 @@ class NiCardManagementModule(reactContext: ReactApplicationContext) :
                     cb.invoke("Error parsing input JSON", null)
                 }
             } catch (e: Exception) {
-                cb.invoke(e.message, null)
+                cb.invoke(describe(e), null)
             }
         }
     }
@@ -126,7 +138,7 @@ class NiCardManagementModule(reactContext: ReactApplicationContext) :
                     cb.invoke("Error parsing input JSON", null)
                 }
             } catch (e: Exception) {
-                cb.invoke(e.message, null)
+                cb.invoke(describe(e), null)
             }
         }
     }
@@ -152,7 +164,7 @@ class NiCardManagementModule(reactContext: ReactApplicationContext) :
                     cb.invoke("Error parsing input JSON", null)
                 }
             } catch (e: Exception) {
-                cb.invoke(e.message, null)
+                cb.invoke(describe(e), null)
             }
         }
     }
