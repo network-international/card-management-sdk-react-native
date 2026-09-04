@@ -698,6 +698,54 @@ A NICardManagement wrapper is used to integrate the Network International SDK in
 
   - the android NICardManagement wrapper can be find inside the __./android/src/main/java/com/nicardmanagement__ folder.
 
+### Code shrinking and obfuscation (ProGuard / R8 / DexGuard)
+
+The Android card-management flows generate an in-memory, self-signed X.509 certificate with BouncyCastle and use its key pair for encryption and decryption. `BouncyCastleProvider` resolves every algorithm reflectively by class name (for example `org.bouncycastle.jcajce.provider.asymmetric.RSA$Mappings`). If those classes are renamed, removed or encrypted by a shrinker, the lookup fails and every SDK operation reports:
+
+```
+No provider succeeded to generate a self-signed certificate. See debug log for the root cause.
+```
+
+The real cause is only visible via `adb logcat -s SelfSignedCertificate:D`.
+
+#### R8 and ProGuard
+
+No action is required. Native Android SDK `2.3.0` and later declare the necessary keep rules through `consumerProguardFiles`, and they are merged into your application's shrinker configuration automatically, including under R8 full mode. Do not add `-dontobfuscate` workarounds or remove those rules.
+
+If you are pinned to an older SDK release that predates those rules, add them to your own `proguard-rules.pro`:
+
+```
+-keep class org.bouncycastle.** { *; }
+-dontwarn org.bouncycastle.**
+-keepclassmembers class * extends java.security.Provider { <init>(...); }
+-keep class ae.network.nicardmanagementsdk.** { *; }
+-keepclassmembers class ae.network.nicardmanagementsdk.** { *; }
+-keepattributes Exceptions, InnerClasses, Signature, EnclosingMethod, *Annotation*
+```
+
+#### DexGuard
+
+DexGuard applies the packaged consumer rules as well, but its additional protections are not covered by keep rules. Exclude the cryptography classes from name obfuscation, class encryption, string encryption and reflection obfuscation in your DexGuard configuration:
+
+```
+-keep,allowoptimization class org.bouncycastle.** { *; }
+-keep,allowoptimization class ae.network.nicardmanagementsdk.** { *; }
+
+# Do not apply DexGuard encryption or reflection obfuscation to these packages.
+-keepresourcefiles META-INF/services/**
+```
+
+In addition, make sure `org.bouncycastle.**` and `ae.network.nicardmanagementsdk.**` are not listed in any `-encryptclasses`, `-encryptstrings` or `-obfuscatereflection` directive, and that `META-INF/services` entries are retained when repackaging.
+
+#### Verifying a protected build
+
+1. Build a minified release: `yarn workspace react-native-ni-card-management-example build:android:release`.
+2. Confirm BouncyCastle survived: `grep org.bouncycastle example/android/app/build/outputs/mapping/release/mapping.txt` should list unrenamed classes.
+3. Confirm a single BouncyCastle version is on the classpath: `cd example/android && ./gradlew :app:dependencies --configuration releaseRuntimeClasspath | grep -i bouncy`.
+4. Run Card Details, Set PIN, Verify PIN, Change PIN and View PIN against the release build.
+
+The example application keeps `minifyEnabled` and R8 full mode enabled for release builds, with an intentionally empty `example/android/app/proguard-rules.pro`, so it acts as a regression guard for the keep rules shipped by the native SDK.
+
 ### Inspecting network traffic
 
 Card-management operations cross the React Native bridge and execute inside the native `NICardManagementSDK`. They are not JavaScript `fetch` or `XMLHttpRequest` calls, so use the native platform inspector when investigating Card Details, Set PIN, Verify PIN, Change PIN, or View PIN traffic.
@@ -747,7 +795,7 @@ Inspect only test or UAT traffic. Requests can contain authentication tokens, ca
 - CocoaPods source tags use `v{version}` format and are resolved from `repository` metadata (fallback to `homepage`).
 - Android native SDK version is centralized in `android/gradle.properties` via `NiCardManagement_nativeSdkVersion`.
 - iOS native SDK version is pinned in `react-native-ni-card-management.podspec` via `s.dependency "NICardManagementSDK", '...'`; keep this aligned with `NiCardManagement_nativeSdkVersion`.
-- Current validated native pins are Android `2.2.2` (`NiCardManagement_nativeSdkVersion`) and iOS `2.1.7` (`NICardManagementSDK` pod dependency).
+- Current validated native pins are Android `2.3.0` (`NiCardManagement_nativeSdkVersion`) and iOS `2.1.7` (`NICardManagementSDK` pod dependency).
 - Android library-side New Architecture is opt-in via `NiCardManagement_newArchEnabled`; keep it disabled by default so app-level `newArchEnabled=true` does not make the SDK module run React codegen for third-party dependency specs (which can cause duplicate generated classes such as `RNCSafeAreaProviderManagerDelegate`).
 - Flipper was a desktop debugging platform for inspecting network traffic, logs, React components, layouts, and databases. React Native no longer includes the generated Flipper integration in current templates, so the obsolete, release-only `ReactNativeFlipper.java` no-op scaffold was removed. It did not initialize Flipper or import Flipper libraries, and no Flipper dependency remains in the JavaScript, Android, or iOS dependency graphs. Use React Native DevTools for the supported debugging workflow; removing the scaffold does not affect application runtime behavior.
 - Jetifier rewrites dependencies from the legacy Android Support Library (`android.support.*`) to AndroidX (`androidx.*`). It is disabled because the current dependency graph is AndroidX-native, avoiding unnecessary transformation during builds. Restore `android.enableJetifier=true` only if a future dependency still contains legacy support-library references and fails to build without rewriting.
