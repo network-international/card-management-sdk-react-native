@@ -93,7 +93,7 @@ repositories {
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
-def native_sdk_version = getExtOrDefault("nativeSdkVersion")
+def core_sdk_version = getExtOrDefault("coreSdkVersion")
 
 dependencies {
   // For < 0.71, this will be from the local maven repo
@@ -101,6 +101,7 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation "com.github.network-international:card-management-sdk-android:$native_sdk_version"
+  // Programmatic Core only (RN owns UI).
+  implementation "ae.network:ni-card-management-sdk-core:$core_sdk_version"
 }
 

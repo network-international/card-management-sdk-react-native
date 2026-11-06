@@ -23,7 +23,22 @@ Pod::Spec.new do |s|
   s.exclude_files = "ios/NiCardManagement-Bridging-Header.h"
   s.swift_version = "5.0"
 
-  s.dependency "NICardManagementSDK", '2.1.7'
+  # Core is SPM/binary-only. Fetch XCFramework from the public Release (no UI SDK).
+  core_version = "0.1.1"
+  s.prepare_command = <<-CMD
+    set -euo pipefail
+    VERSION="#{core_version}"
+    ZIP="NICardManagementSDKCore.xcframework.zip"
+    URL="https://github.com/network-international/card-management-sdk-core/releases/download/${VERSION}/${ZIP}"
+    mkdir -p ios/Frameworks
+    if [ ! -d "ios/Frameworks/NICardManagementSDKCore.xcframework" ]; then
+      curl -fsSL -o "ios/Frameworks/${ZIP}" "${URL}"
+      unzip -qo "ios/Frameworks/${ZIP}" -d ios/Frameworks
+      rm -f "ios/Frameworks/${ZIP}"
+    fi
+  CMD
+  s.vendored_frameworks = "ios/Frameworks/NICardManagementSDKCore.xcframework"
+
   # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.
   # See https://github.com/facebook/react-native/blob/febf6b7f33fdb4904669f99d795eba4c0f95d7bf/scripts/cocoapods/new_architecture.rb#L79.
   if respond_to?(:install_modules_dependencies, true)
@@ -47,4 +62,3 @@ Pod::Spec.new do |s|
     end
   end
 end
-

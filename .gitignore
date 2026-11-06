@@ -88,3 +88,6 @@ dist/
 # Local working notes, intentionally untracked
 TODO.md
 *.code-workspace
+
+# Downloaded Core XCFramework (pod prepare_command)
+ios/Frameworks/
