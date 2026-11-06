@@ -510,8 +510,9 @@ or without specifying the type (pin length)
 ```
 
 
-#### Programmatic Interface
-The customer application will be responsible to handle the UI part.
+#### API usage (no UI components)
+
+Hooks below are this React Native package’s API. Underlying native ops are **Core** — see the [Core README](https://github.com/network-international/card-management-sdk-core). The app owns presentation when not using the UI components above.
 
 ##### Retrieve Card Details
 The programmatic interface of the card details will return the card details in the getCardDetailsResult: NIGetCardSuccessResponse object.
@@ -710,9 +711,9 @@ The real cause is only visible via `adb logcat -s SelfSignedCertificate:D`.
 
 #### R8 and ProGuard
 
-No action is required. Native Android SDK `2.3.0` and later declare the necessary keep rules through `consumerProguardFiles`, and they are merged into your application's shrinker configuration automatically, including under R8 full mode. Do not add `-dontobfuscate` workarounds or remove those rules.
+No action is required. Core `0.1.1` (`ae.network:ni-card-management-sdk-core`) declares the necessary keep rules through `consumerProguardFiles`, and they are merged into your application's shrinker configuration automatically, including under R8 full mode. Do not add `-dontobfuscate` workarounds or remove those rules.
 
-If you are pinned to an older SDK release that predates those rules, add them to your own `proguard-rules.pro`:
+If you are pinned to an older release that predates those rules, add them to your own `proguard-rules.pro`:
 
 ```
 -keep class org.bouncycastle.** { *; }
@@ -793,17 +794,15 @@ Inspect only test or UAT traffic. Requests can contain authentication tokens, ca
 ### Maintainer notes
 
 - CocoaPods source tags use `v{version}` format and are resolved from `repository` metadata (fallback to `homepage`).
-- Android native SDK version is centralized in `android/gradle.properties` via `NiCardManagement_nativeSdkVersion`.
-- iOS native SDK version is pinned in `react-native-ni-card-management.podspec` via `s.dependency "NICardManagementSDK", '...'`; keep this aligned with `NiCardManagement_nativeSdkVersion`.
-- Current validated native pins are Android `2.3.0` (`NiCardManagement_nativeSdkVersion`) and iOS `2.1.7` (`NICardManagementSDK` pod dependency).
+- Native Core is pinned on Android (`NiCardManagement_coreSdkVersion`) and in the iOS podspec prepare_command (XCFramework Release tag).
+- Current validated Core pin: `0.1.1` (Android Maven + iOS XCFramework).
 - Android library-side New Architecture is opt-in via `NiCardManagement_newArchEnabled`; keep it disabled by default so app-level `newArchEnabled=true` does not make the SDK module run React codegen for third-party dependency specs (which can cause duplicate generated classes such as `RNCSafeAreaProviderManagerDelegate`).
 - Flipper was a desktop debugging platform for inspecting network traffic, logs, React components, layouts, and databases. React Native no longer includes the generated Flipper integration in current templates, so the obsolete, release-only `ReactNativeFlipper.java` no-op scaffold was removed. It did not initialize Flipper or import Flipper libraries, and no Flipper dependency remains in the JavaScript, Android, or iOS dependency graphs. Use React Native DevTools for the supported debugging workflow; removing the scaffold does not affect application runtime behavior.
 - Jetifier rewrites dependencies from the legacy Android Support Library (`android.support.*`) to AndroidX (`androidx.*`). It is disabled because the current dependency graph is AndroidX-native, avoiding unnecessary transformation during builds. Restore `android.enableJetifier=true` only if a future dependency still contains legacy support-library references and fails to build without rewriting.
 - If Metro start fails with `EADDRINUSE` on `:8081`, either stop the existing process using that port or run the example app on an alternate port with `yarn workspace react-native-ni-card-management-example start:8082`.
 - Example app start scripts are guarded by `check:node` and require Node `>=22.13.0`; older runtimes can fail with Metro errors such as `configs.toReversed is not a function`.
 - iOS bridge now accepts `connectionProperties.extraHeaders` as a JSON string (same contract as Android). `connectionProperties.extraNetworkHeaders` dictionary remains supported as a backward-compatible fallback.
-- Android 2.2.2 integration may require manifest merge override for `android:allowBackup`; the example app resolves this in `example/android/app/src/main/AndroidManifest.xml` using `tools:replace="android:allowBackup"`.
-- JitPack timeouts/resolution flakiness for Android metadata were mitigated in `android/build.gradle` by setting repository metadata sources to `mavenPom()` and `artifact()` for `https://jitpack.io`.
+- Example Android app may need a manifest merge override for `android:allowBackup` (`tools:replace="android:allowBackup"` in `example/android/app/src/main/AndroidManifest.xml`).
 - RN and Flutter integration models differ by design:
   - Flutter initializes once with `initialize(...)` and passes `extraNetworkHeaders` as a map.
   - RN passes `NiInputInterface` per call/component and uses `connectionProperties.extraHeaders` JSON string as the cross-platform transport shape.

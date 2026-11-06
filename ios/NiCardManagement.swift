@@ -1,5 +1,5 @@
 import Foundation
-import NICardManagementSDK
+import NICardManagementSDKCore
 import React
 
 private final class ExtraHeadersProvider: NICardManagementExtraHeaders {
